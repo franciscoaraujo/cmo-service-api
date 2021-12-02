@@ -10,7 +10,7 @@ public class SpringDataRestConfig implements RepositoryRestConfigurer {
 	@Override
 	public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry cors) {
 
-		cors.addMapping("/*").allowedOrigins("*").allowedMethods("GET", "PUT", "DELETE").allowCredentials(false)
+		cors.addMapping("/*").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE").allowCredentials(false)
 				.maxAge(3600);
 	}
 }
