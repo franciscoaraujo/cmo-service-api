@@ -48,7 +48,6 @@ public class MenbroController {
 	}
 
 	@GetMapping
-	@CrossOrigin(origins = "http://localhost:8080")
 	public ResponseEntity<List<MenbroDTO>> listAll() {
 		List<MenbroDTO> retornaTodos = service.buscaTodos();
 		return ResponseEntity.ok().body(retornaTodos);
