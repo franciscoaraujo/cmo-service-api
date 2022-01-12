@@ -35,9 +35,16 @@ public class SpringDataRestConfig extends WebSecurityConfigurerAdapter {
 	
 	public static final String[] PUBLIC_MATCHERS_POST = { 
 			"/api/v1/CMO/menbro",
-			"/api/v1/CMO/obreiro",
-			"/api/v1/CMO/login"
+			"/api/v1/CMO/obreiro"
+			//"/api/v1/CMO/login",
+			//"/api/v1/CMO/authenticate"
 	};
+	
+	public static final String[] PUBLIC_MATCHERS_DELETE = { 
+			"/api/v1/CMO/menbro/**",
+			"/api/v1/CMO/obreiro/**"
+	};
+	
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -49,6 +56,8 @@ public class SpringDataRestConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 		.antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
 		.antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll()
+		.antMatchers(HttpMethod.DELETE, PUBLIC_MATCHERS_DELETE).permitAll()
+		
 		.anyRequest().authenticated();
 		
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

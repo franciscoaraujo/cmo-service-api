@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2021-12-05T02:40:42-0300",
+    date = "2022-01-11T22:28:41-0300",
     comments = "version: 1.3.1.Final, compiler: Eclipse JDT (IDE) 1.4.0.v20210708-0430, environment: Java 17.0.1 (Oracle Corporation)"
 )
 @Component
@@ -25,11 +25,13 @@ public class MenbroMapperImpl implements MenbroMapper {
 
         Menbro menbro = new Menbro();
 
+        menbro.setCongrecacao( dto.getCongregacao() );
         menbro.setDataSaida( dto.getDataSaida() );
         menbro.setDataBatismo( dto.getDataBatismo() );
         menbro.setDataAdmissao( dto.getDataAdmissao() );
         menbro.setCargos( dto.getCargos() );
         menbro.setCongregacao( dto.getCongregacao() );
+        menbro.setDataNascimento( dto.getDataNascimento() );
         menbro.setFlagAtivacao( dto.getFlagAtivacao() );
         menbro.setId( dto.getId() );
         menbro.setIgrejaBatismo( dto.getIgrejaBatismo() );
@@ -51,6 +53,7 @@ public class MenbroMapperImpl implements MenbroMapper {
 
         MenbroDTO menbroDTO = new MenbroDTO();
 
+        menbroDTO.setDataNascimento( dto.getDataNascimento() );
         menbroDTO.setCargos( dto.getCargos() );
         menbroDTO.setCongregacao( dto.getCongregacao() );
         menbroDTO.setDataAdmissao( dto.getDataAdmissao() );

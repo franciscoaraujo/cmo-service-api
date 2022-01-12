@@ -32,7 +32,7 @@ public class MenbroService {
 	}
 
 	public MenbroDTO buscarPorId(Long id) throws MenbroNotFoundException {
-		Menbro menbro = menbroRepository.findById(id).orElseThrow(() -> new MenbroNotFoundException(id));
+		Menbro menbro = menbroRepository.findByIdActives(id).orElseThrow(() -> new MenbroNotFoundException(id));
 		return menbroMapper.toDTO(menbro);
 	}
 
@@ -47,9 +47,7 @@ public class MenbroService {
 	}
 
 	public List<MenbroDTO> buscaTodos() {
-		List<Menbro> listMenbro = menbroRepository.findAll();
-		
-		System.out.println(listMenbro);
+		List<Menbro> listMenbro = menbroRepository.findByAllActives();
 		return listMenbro.stream().map(menbroMapper::toDTO).collect(Collectors.toList());
 	}
 
@@ -83,6 +81,7 @@ public class MenbroService {
 	}
 
 	public MessageResponseDTO excluir(Long id) throws MenbroNotFoundException {
+		
 		Menbro menbroLogicalDelete = menbroRepository.findById(id).orElseThrow(() -> new MenbroNotFoundException(id));
 		menbroLogicalDelete.setFlagAtivacao(Ativo.NAO_ATIVO);
 		menbroRepository.save(menbroLogicalDelete);
@@ -95,5 +94,12 @@ public class MenbroService {
 	private MessageResponseDTO createMessageResponse(String s, Long id2) {
 		return MessageResponseDTO.builder().message(s + id2).build();
 	}
+
+	/*public Page<MenbroDTO> search(Integer page, Integer linesPerPage, String orderBy, String direction) {
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		Page<Menbro> listPageMenbro = menbroRepository.findMenbroPageable(pageRequest);
+		
+		return menbroMapper.toDTOPAGE(listPageMenbro);
+	}*/
 
 }

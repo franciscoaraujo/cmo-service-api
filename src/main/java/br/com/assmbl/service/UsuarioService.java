@@ -31,9 +31,11 @@ public class UsuarioService {
 	public UsuarioDTO fazLogin(UsuarioDTO usuarioDTO) throws NoSuchElementException, UsuarioNotFoundException {
 		String userName = usuarioDTO.getUsername();
 		Usuario user =  repository.findByUsuario(userName).orElseThrow(()-> new UsuarioNotFoundException(usuarioDTO.getUsername()));
+		
 		if(pe.matches(usuarioDTO.getPassword(), user.getPassword())){
 			return userMapper.toUsuarioDTO(user);
 		}
+		
 		return null;
 	}
 	

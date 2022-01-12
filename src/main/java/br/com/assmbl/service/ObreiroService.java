@@ -85,7 +85,13 @@ public class ObreiroService {
 		List<Obreiro> listObreiro = obreiroReposistory.findAll();
 		return listObreiro.stream().map(obreiroMapper::toDTO).collect(Collectors.toList());
 	}
-
+	
+	public List<ObreiroDTO> search(Integer page, Integer linesPerPage, String orderBy,	String direction) {
+		List<Obreiro> listObreiro = obreiroReposistory.findAll();
+		return listObreiro.stream().map(obreiroMapper::toDTO).collect(Collectors.toList());
+	}
+	
+	
 	public List<ObreiroDTO> buscaPorDataDeAdmissao(String dataInicial, String dataFinal) {
 		List<Obreiro> listObreiro = obreiroReposistory.findByDataRangePesquisa(dataInicial, dataFinal);
 		return listObreiro.stream().map(obreiroMapper::toDTO).collect(Collectors.toList());

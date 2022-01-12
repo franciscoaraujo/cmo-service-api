@@ -52,6 +52,8 @@ public class Menbro implements Serializable {
 	@JoinColumn(name = "id_pessoa_fk")
 	private Pessoa pessoa;
 	
+	private LocalDate dataNascimento;
+	
 	@Column(nullable = true)
 	private Long numeroMatricula;// numero da matricula será adicionado na mao
 
