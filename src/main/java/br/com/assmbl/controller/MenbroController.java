@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,7 +33,8 @@ import lombok.AllArgsConstructor;
 public class MenbroController {
 
 	private final MenbroService service;
-
+	
+	@CrossOrigin
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<MessageResponseDTO> create(@RequestBody @Valid MenbroDTO menbroDTO) {
@@ -41,27 +43,30 @@ public class MenbroController {
 
 	}
 
-	
+	@CrossOrigin
 	@GetMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<MenbroDTO> findById(@PathVariable Long id) throws MenbroNotFoundException {
 		MenbroDTO menbroDTO = service.buscarPorId(id);
 		return ResponseEntity.ok().body(menbroDTO);
 	}
-
+	
+	@CrossOrigin
 	@GetMapping
 	public ResponseEntity<List<MenbroDTO>> listAll() {
 		List<MenbroDTO> retornaTodos = service.buscaTodos();
 		return ResponseEntity.ok().body(retornaTodos);
 	}
-
+	
+	@CrossOrigin
 	@PutMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public MessageResponseDTO update(@PathVariable Long id, @RequestBody @Valid MenbroDTO menbroDTO)
 			throws MenbroNotFoundException {
 		return service.atualizar(id, menbroDTO);
 	}
-
+	
+	@CrossOrigin
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public MessageResponseDTO delete(@PathVariable long id) throws MenbroNotFoundException {

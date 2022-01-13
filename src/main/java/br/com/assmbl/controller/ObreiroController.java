@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,24 +34,28 @@ import lombok.AllArgsConstructor;
 public class ObreiroController {
 
 	private ObreiroService service;
-
+	
+	@CrossOrigin
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public MessageResponseDTO create(@RequestBody @Valid ObreiroDTO obreiroDTO) throws MenbroNotFoundException {
 		return service.cadastra(obreiroDTO);
 	}
-
+	
+	@CrossOrigin
 	@GetMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public ObreiroDTO findById(@PathVariable Long id) throws ObreiroNotFoundException {
 		return service.buscarPorId(id);
 	}
-
+	
+	@CrossOrigin
 	@GetMapping
 	public List<ObreiroDTO> listAll() {
 		return service.buscaTodos();
 	}
-
+	
+	@CrossOrigin
 	@PutMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public MessageResponseDTO update(@PathVariable Long id, @RequestBody @Valid ObreiroDTO obreiroDTO)
@@ -58,19 +63,12 @@ public class ObreiroController {
 		return service.atualizar(id, obreiroDTO);
 	}
 
+	@CrossOrigin
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public MessageResponseDTO delete(@PathVariable Long id) throws ObreiroNotFoundException {
 		return service.excluir(id);
 	}
 
-	public ResponseEntity<Page<ObreiroDTO>>getFindPage(
-			@RequestParam(value = "page", defaultValue = "0") Integer page,
-			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
-			@RequestParam(value = "orderBy", defaultValue = "nome") String orderBy,
-			@RequestParam(value = "direction", defaultValue = "ASC") String direction) throws ObjectNotFoundException {
-		
-		return null;
-	}
 
 }

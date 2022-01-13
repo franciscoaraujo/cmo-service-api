@@ -35,9 +35,9 @@ public class SpringDataRestConfig extends WebSecurityConfigurerAdapter {
 	
 	public static final String[] PUBLIC_MATCHERS_POST = { 
 			"/api/v1/CMO/menbro",
-			"/api/v1/CMO/obreiro"
-			//"/api/v1/CMO/login",
-			//"/api/v1/CMO/authenticate"
+			"/api/v1/CMO/obreiro",
+			"/api/v1/CMO/login",
+			"/api/v1/CMO/authenticate"
 	};
 	
 	public static final String[] PUBLIC_MATCHERS_DELETE = { 

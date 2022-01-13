@@ -1,9 +1,6 @@
 package br.com.assmbl.controller;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -15,20 +12,19 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.assmbl.config.JwtTokenUtil;
-import br.com.assmbl.domain.dto.request.UsuarioDTO;
+import br.com.assmbl.domain.model.JwtRequest;
 import br.com.assmbl.domain.model.JwtResponse;
 import br.com.assmbl.service.JwtUserDetailsService;
-import br.com.assmbl.service.UsuarioService;
 import lombok.AllArgsConstructor;
 
 @RestController
-@RequestMapping("/api/v1/CMO/login")
+@RequestMapping("/api/v1/CMO/authenticate")
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-public class UsuarioController {
+public class JwtAuthenticationController {
 
 	@Autowired
 	private AuthenticationManager authenticationManager;
@@ -40,31 +36,24 @@ public class UsuarioController {
 	private JwtUserDetailsService userDetailsService;
 
 	@Autowired
-	private UsuarioService service;
-	
-
-	@Autowired
 	private BCryptPasswordEncoder pe;
+
 	
 	@CrossOrigin
 	@PostMapping
-	@ResponseStatus(HttpStatus.ACCEPTED)
-	public ResponseEntity<JwtResponse> create(@RequestBody @Valid UsuarioDTO usuarioDTO) throws Exception {
-
-		authenticate(usuarioDTO.getUsername(), usuarioDTO.getPassword());
-		
-		System.out.println(usuarioDTO.getPassword());
-		
-		UserDetails userDetails = userDetailsService.loadUserByUsername(usuarioDTO.getUsername());
-		if (pe.matches(usuarioDTO.getPassword(), userDetails.getPassword())) {
+	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
+		//authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+		UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+		if (pe.matches(authenticationRequest.getPassword(), userDetails.getPassword())) {
 			final String token = jwtTokenUtil.generateToken(userDetails);
 			return ResponseEntity.ok(new JwtResponse(token));
 		}
 		return ResponseEntity.ok(new JwtResponse(null));
+		
 	}
 
 	private void authenticate(String username, String password) throws Exception {
-		try {	
+		try {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 		} catch (DisabledException e) {
 			throw new Exception("USER_DISABLED", e);
